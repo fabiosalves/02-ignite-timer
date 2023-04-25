@@ -82,7 +82,7 @@ export const MinutesAmountInput = styled(BaseInput)`
   width: 4rem;
 `
 
-export const StartCountDownButton = styled.button`
+export const StartCountdownButton = styled.button`
   width: 100%;
   border: 0;
   padding: 1rem;

@@ -5,18 +5,13 @@ import {
   HomeContainer,
   MinutesAmountInput,
   Separator,
-  StartCountDownButton,
+  StartCountdownButton,
   TaskInput,
 } from './styles'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useState } from 'react'
-
-// controlled: manter em tempo real a informação do formulário,
-//             atualizando o estado a todo momento que o usuário digitar algo.
-
-// uncontroled: só atualiza a informação quando precisarmos dela. => Útil para interfaces complexas
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
@@ -56,16 +51,14 @@ export function Home() {
       minutesAmount: data.minutesAmount,
     }
 
-    setCycles((state) => [...cycles, newCycle])
-    console.log(id)
+    setCycles((state) => [...state, newCycle])
+
     setActiveCycleId(id)
 
-    // reset()
+    reset()
   }
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
-
-  // console.log(activeCycleId)
 
   const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0
   const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0
@@ -75,6 +68,8 @@ export function Home() {
 
   const minutes = String(minutesAmount).padStart(2, '0')
   const seconds = String(secondsAmount).padStart(2, '0')
+
+  console.log(activeCycle)
 
   const task = watch('task')
   const isSumbmitDisabled = !task
@@ -119,10 +114,10 @@ export function Home() {
           <span>{seconds[1]}</span>
         </CountDownContainer>
 
-        <StartCountDownButton disabled={isSumbmitDisabled} type="submit">
+        <StartCountdownButton disabled={isSumbmitDisabled} type="submit">
           <Play size={24} />
           Começar
-        </StartCountDownButton>
+        </StartCountdownButton>
       </form>
     </HomeContainer>
   )
